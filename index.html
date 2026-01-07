@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agoda | Hotel Booking</title>
+
+    <style>
+        :root{
+            --primary:red;
+            --dark:#111;
+            --light:#fff;
+            --gray:#e5e5e5;
+        }
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Segoe UI, sans-serif;
+        }
+
+        body{
+            background-color:var(--gray);
+            scroll-behavior:smooth;
+        }
+
+        /* ---------- NAVBAR ---------- */
+        .nav{
+            position:sticky;
+            top:0;
+            z-index:100;
+            background:var(--dark);
+            padding:15px 40px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+        }
+
+        .logo{
+            font-size:40px;
+            font-weight:bold;
+            color:white;
+        }
+
+        .logo span:nth-child(1){color:red;}
+        .logo span:nth-child(2){color:orange;}
+        .logo span:nth-child(3){color:green;}
+        .logo span:nth-child(4){color:purple;}
+        .logo span:nth-child(5){color:dodgerblue;}
+
+        /* ---------- HERO ---------- */
+        .hero img{
+            width:100%;
+            height:500px;
+            object-fit:cover;
+            border-radius:0 0 80px 80px;
+        }
+
+        h6{
+            color:crimson;
+            font-size:40px;
+            text-align:center;
+            margin:40px 0 20px;
+        }
+
+        /* ---------- CARDS ---------- */
+        .Main{
+            display:flex;
+            justify-content:space-evenly;
+            padding:40px;
+            gap:30px;
+        }
+
+        .Sub{
+            background:white;
+            width:350px;
+            border-radius:20px;
+            text-align:center;
+            padding:15px;
+            transition:0.5s;
+            cursor:pointer;
+        }
+
+        .Sub img{
+            width:100%;
+            height:200px;
+            object-fit:cover;
+            border-radius:15px;
+        }
+
+        .Sub h2{
+            margin:10px 0;
+        }
+
+        .Sub button{
+            width:90%;
+            height:45px;
+            border:none;
+            border-radius:30px;
+            background:black;
+            color:white;
+            font-size:16px;
+            cursor:pointer;
+            margin:15px 0;
+        }
+
+        .Main:hover .Sub{
+            transform:scale(0.9);
+            opacity:0.7;
+        }
+
+        .Main .Sub:hover{
+            transform:scale(1);
+            opacity:1;
+            box-shadow:0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        /* ---------- MODAL ---------- */
+        .modal{
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            background:rgba(0,0,0,0.6);
+            display:none;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .modal-content{
+            background:white;
+            padding:30px;
+            border-radius:20px;
+            width:300px;
+            text-align:center;
+        }
+
+        .close{
+            margin-top:20px;
+            background:red;
+            color:white;
+            border:none;
+            padding:10px 20px;
+            border-radius:20px;
+            cursor:pointer;
+        }
+
+        footer{
+            background:black;
+            color:white;
+            text-align:center;
+            padding:30px;
+            margin-top:50px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="nav">
+    <div class="logo">
+        <span>a</span><span>g</span><span>o</span><span>d</span><span>a</span>
+    </div>
+</div>
+
+<!-- HERO IMAGE -->
+<div class="hero">
+    <img src="https://www.agoda.com/press/wp-content/uploads/2025/05/Agoda-Joins-Forces-with-Indian-Hotels-Company-Limited-IHCL-To-Expand-Access-to-Indias-Iconic-Hospitality-Portfolio.jpg">
+</div>
+
+<!-- SINGLE ROOMS -->
+<h6>Single Rooms</h6>
+
+<div class="Main">
+    <div class="Sub" onclick="openModal('Chennai')">
+        <h2>Chennai</h2>
+        <img src="https://pix10.agoda.net/hotelImages/869954/-1/3adc9b71d77303dfb5eccb8995e9fb95.jpg">
+        <button>Explore</button>
+    </div>
+
+    <div class="Sub" onclick="openModal('Mumbai')">
+        <h2>Mumbai</h2>
+        <img src="https://pix10.agoda.net/hotelImages/31431463/0/9554a10566724d0b18face118ffbcc51.jpg">
+        <button>Explore</button>
+    </div>
+
+    <div class="Sub" onclick="openModal('Bangalore')">
+        <h2>Bangalore</h2>
+        <img src="https://pix10.agoda.net/hotelImages/28714334/-1/1c1a995baa5da74a0db6aa1cbccbf966.jpg">
+        <button>Explore</button>
+    </div>
+
+    <div class="Sub" onclick="openModal('Kolkata')">
+        <h2>Kolkata</h2>
+        <img src="https://cdn10.agoda.net/images/mvc/default/background_image/geo/2203_deluxe_01.jpg">
+        <button>Explore</button>
+    </div>
+</div>
+
+<!-- DOUBLE ROOMS -->
+<h6>Double Rooms</h6>
+
+<div class="Main">
+    <div class="Sub" onclick="openModal('Chennai')">
+        <h2>Chennai</h2>
+        <img src="https://pix10.agoda.net/hotelImages/869954/-1/3adc9b71d77303dfb5eccb8995e9fb95.jpg">
+        <button>Explore</button>
+    </div>
+
+    <div class="Sub" onclick="openModal('Mumbai')">
+        <h2>Mumbai</h2>
+        <img src="https://pix10.agoda.net/hotelImages/31431463/0/9554a10566724d0b18face118ffbcc51.jpg">
+        <button>Explore</button>
+    </div>
+
+    <div class="Sub" onclick="openModal('Bangalore')">
+        <h2>Bangalore</h2>
+        <img src="https://pix10.agoda.net/hotelImages/28714334/-1/1c1a995baa5da74a0db6aa1cbccbf966.jpg">
+        <button>Explore</button>
+    </div>
+
+    <div class="Sub" onclick="openModal('Kolkata')">
+        <h2>Kolkata</h2>
+        <img src="https://cdn10.agoda.net/images/mvc/default/background_image/geo/2203_deluxe_01.jpg">
+        <button>Explore</button>
+    </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal" id="modal">
+    <div class="modal-content">
+        <h2 id="modalCity"></h2>
+        <p>Booking feature coming soon</p>
+        <button class="close" onclick="closeModal()">Close</button>
+    </div>
+</div>
+
+<footer>
+    <h3>book@agoda.in</h3>
+    <p>© 2026 Agoda Clone</p>
+</footer>
+
+<script>
+    function openModal(city){
+        document.getElementById("modal").style.display="flex";
+        document.getElementById("modalCity").innerText=city + " Hotel";
+    }
+
+    function closeModal(){
+        document.getElementById("modal").style.display="none";
+    }
+</script>
+
+</body>
+</html>
