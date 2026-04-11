@@ -3,7 +3,6 @@
 
 A modern, responsive, and scalable **Agoda-inspired hotel booking web application** built using **HTML, CSS, and JavaScript**, designed to demonstrate real-world frontend architecture and advanced UI/UX practices.
 
-🔗 Live Demo: (Add GitHub Pages / Netlify link here)
 
 ---
 
