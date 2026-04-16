@@ -29,6 +29,13 @@ A modern and responsive Agoda-inspired hotel booking interface built using **HTM
 - Basic event handling using JavaScript
 - Smooth UI transitions and animations
 
+
+## 🚧 Challenges & Solutions
+
+* Managing complex UI states
+  → structured component hierarchy
+
+
 ---
 
 ## 🛠️ Tech Stack
