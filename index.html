@@ -1,256 +1,604 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>Agoda | Hotel Booking</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Agoda Clone | FAANG Level UI</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <style>
-        :root{
-            --primary:red;
-            --dark:#111;
-            --light:#fff;
-            --gray:#e5e5e5;
+        :root {
+            --bg: #07111f;
+            --card: #101b2d;
+            --glass: rgba(255, 255, 255, .08);
+            --line: rgba(255, 255, 255, .08);
+            --text: #ffffff;
+            --muted: #b8c0d0;
+            --primary: #5b8cff;
+            --primary2: #00d4ff;
+            --success: #1ed760;
+            --shadow: 0 25px 60px rgba(0, 0, 0, .45);
+            --radius: 22px;
         }
 
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Segoe UI, sans-serif;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        body{
-            background-color:var(--gray);
-            scroll-behavior:smooth;
+        html {
+            scroll-behavior: smooth;
         }
 
-        /* ---------- NAVBAR ---------- */
-        .nav{
-            position:sticky;
-            top:0;
-            z-index:100;
-            background:var(--dark);
-            padding:15px 40px;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
+        body {
+            font-family: Inter, Segoe UI, Arial, sans-serif;
+            background:
+                radial-gradient(circle at 10% 20%, rgba(91, 140, 255, .15), transparent 25%),
+                radial-gradient(circle at 90% 10%, rgba(0, 212, 255, .12), transparent 25%),
+                linear-gradient(135deg, #07111f, #0b1628, #10192f);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        .logo{
-            font-size:40px;
-            font-weight:bold;
-            color:white;
+        /* animated particles */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                radial-gradient(circle, rgba(255, 255, 255, .08) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: moveBg 18s linear infinite;
+            pointer-events: none;
+            z-index: -1;
         }
 
-        .logo span:nth-child(1){color:red;}
-        .logo span:nth-child(2){color:orange;}
-        .logo span:nth-child(3){color:green;}
-        .logo span:nth-child(4){color:purple;}
-        .logo span:nth-child(5){color:dodgerblue;}
+        @keyframes moveBg {
+            from {
+                transform: translateY(0)
+            }
 
-        /* ---------- HERO ---------- */
-        .hero img{
-            width:100%;
-            height:500px;
-            object-fit:cover;
-            border-radius:0 0 80px 80px;
+            to {
+                transform: translateY(30px)
+            }
         }
 
-        h6{
-            color:crimson;
-            font-size:40px;
-            text-align:center;
-            margin:40px 0 20px;
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 18px 7%;
+            backdrop-filter: blur(18px);
+            background: rgba(10, 15, 25, .55);
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
         }
 
-        /* ---------- CARDS ---------- */
-        .Main{
-            display:flex;
-            justify-content:space-evenly;
-            padding:40px;
-            gap:30px;
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: .5px;
         }
 
-        .Sub{
-            background:white;
-            width:350px;
-            border-radius:20px;
-            text-align:center;
-            padding:15px;
-            transition:0.5s;
-            cursor:pointer;
+        .logo span:nth-child(1) {
+            color: #ff4757;
         }
 
-        .Sub img{
-            width:100%;
-            height:200px;
-            object-fit:cover;
-            border-radius:15px;
+        .logo span:nth-child(2) {
+            color: #ffa502;
         }
 
-        .Sub h2{
-            margin:10px 0;
+        .logo span:nth-child(3) {
+            color: #2ed573;
         }
 
-        .Sub button{
-            width:90%;
-            height:45px;
-            border:none;
-            border-radius:30px;
-            background:black;
-            color:white;
-            font-size:16px;
-            cursor:pointer;
-            margin:15px 0;
+        .logo span:nth-child(4) {
+            color: #a55eea;
         }
 
-        .Main:hover .Sub{
-            transform:scale(0.9);
-            opacity:0.7;
+        .logo span:nth-child(5) {
+            color: #1e90ff;
         }
 
-        .Main .Sub:hover{
-            transform:scale(1);
-            opacity:1;
-            box-shadow:0 20px 40px rgba(0,0,0,0.4);
+        .nav-links {
+            display: flex;
+            gap: 28px;
         }
 
-        /* ---------- MODAL ---------- */
-        .modal{
-            position:fixed;
-            top:0;
-            left:0;
-            width:100%;
-            height:100%;
-            background:rgba(0,0,0,0.6);
-            display:none;
-            justify-content:center;
-            align-items:center;
+        .nav-links a {
+            text-decoration: none;
+            color: #fff;
+            opacity: .85;
+            transition: .25s;
+            font-weight: 600;
         }
 
-        .modal-content{
-            background:white;
-            padding:30px;
-            border-radius:20px;
-            width:300px;
-            text-align:center;
+        .nav-links a:hover {
+            color: var(--primary2);
+            transform: translateY(-2px);
         }
 
-        .close{
-            margin-top:20px;
-            background:red;
-            color:white;
-            border:none;
-            padding:10px 20px;
-            border-radius:20px;
-            cursor:pointer;
+        /* HERO */
+        .hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            align-items: center;
+            gap: 40px;
+            padding: 120px 7% 80px;
         }
 
-        footer{
-            background:black;
-            color:white;
-            text-align:center;
-            padding:30px;
-            margin-top:50px;
+        .hero-text h1 {
+            font-size: 4rem;
+            line-height: 1.08;
+            margin-bottom: 18px;
+        }
+
+        .gradient {
+            background: linear-gradient(90deg, #5b8cff, #00d4ff, #8d5bff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text p {
+            color: var(--muted);
+            font-size: 1.15rem;
+            max-width: 620px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .cta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            border: none;
+            cursor: pointer;
+            transition: .3s;
+            font-weight: 700;
+        }
+
+        .btn-primary {
+            padding: 15px 28px;
+            border-radius: 999px;
+            color: #fff;
+            background: linear-gradient(135deg, var(--primary), var(--primary2));
+            box-shadow: 0 10px 30px rgba(91, 140, 255, .35);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.03);
+        }
+
+        .btn-secondary {
+            padding: 15px 28px;
+            border-radius: 999px;
+            color: #fff;
+            background: transparent;
+            border: 1px solid var(--line);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, .06);
+        }
+
+        /* floating search card */
+        .hero-card {
+            perspective: 1000px;
+        }
+
+        .search-box {
+            background: var(--glass);
+            border: 1px solid var(--line);
+            backdrop-filter: blur(18px);
+            border-radius: var(--radius);
+            padding: 28px;
+            box-shadow: var(--shadow);
+            transform-style: preserve-3d;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotateY(0deg)
+            }
+
+            50% {
+                transform: translateY(-12px) rotateY(3deg)
+            }
+        }
+
+        .search-box h3 {
+            margin-bottom: 18px;
+            font-size: 1.4rem;
+        }
+
+        .inputs {
+            display: grid;
+            gap: 14px;
+        }
+
+        .input {
+            padding: 15px;
+            border-radius: 16px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, .04);
+            color: #fff;
+        }
+
+        .stats {
+            margin-top: 22px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+
+        .stat {
+            background: rgba(255, 255, 255, .04);
+            padding: 14px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .stat h2 {
+            color: var(--primary2);
+        }
+
+        /* SECTION */
+        section {
+            padding: 80px 7%;
+        }
+
+        .section-title {
+            font-size: 2.4rem;
+            margin-bottom: 14px;
+        }
+
+        .section-sub {
+            color: var(--muted);
+            margin-bottom: 35px;
+        }
+
+        /* cards */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 28px;
+        }
+
+        .card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, .08), rgba(255, 255, 255, .03));
+            border: 1px solid var(--line);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: .35s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+
+        .card:hover {
+            transform: translateY(-10px) rotateX(5deg) rotateY(-5deg) scale(1.02);
+        }
+
+        .card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 22px;
+        }
+
+        .card-body h3 {
+            margin-bottom: 10px;
+        }
+
+        .meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--muted);
+            margin-bottom: 16px;
+        }
+
+        .price {
+            color: var(--success);
+            font-weight: 800;
+            font-size: 1.15rem;
+        }
+
+        /* modal */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .65);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .modal-box {
+            width: 100%;
+            max-width: 560px;
+            background: #101a2d;
+            border: 1px solid var(--line);
+            border-radius: 28px;
+            padding: 32px;
+            box-shadow: var(--shadow);
+            animation: pop .25s ease;
+        }
+
+        @keyframes pop {
+            from {
+                transform: scale(.9);
+                opacity: 0
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1
+            }
+        }
+
+        .close {
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        /* footer */
+        footer {
+            padding: 40px 7%;
+            text-align: center;
+            color: var(--muted);
+            border-top: 1px solid var(--line);
+            margin-top: 40px;
+        }
+
+        /* responsive */
+        @media(max-width:960px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-text h1 {
+                font-size: 3rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media(max-width:560px) {
+            .hero-text h1 {
+                font-size: 2.35rem;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 
 <body>
 
-<!-- NAVBAR -->
-<div class="nav">
-    <div class="logo">
-        <span>a</span><span>g</span><span>o</span><span>d</span><span>a</span>
+    <nav>
+        <div class="logo">
+            <span>a</span><span>g</span><span>o</span><span>d</span><span>a</span>
+        </div>
+
+        <div class="nav-links">
+            <a href="#hotels">Hotels</a>
+            <a href="#luxury">Luxury</a>
+            <a href="#about">About</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+
+        <div class="hero-text">
+            <h1>Find Your Next <span class="gradient">Luxury Stay</span></h1>
+
+            <p>
+                Agoda-inspired premium hotel booking experience with immersive UI,
+                intelligent interactions, 3D motion effects, and production-grade frontend engineering.
+            </p>
+
+            <div class="cta">
+                <button class="btn-primary" onclick="scrollToHotels()">Explore Hotels</button>
+                <button class="btn-secondary" onclick="showToast()">Watch Demo</button>
+            </div>
+        </div>
+
+        <div class="hero-card">
+            <div class="search-box">
+                <h3>Search Destination</h3>
+
+                <div class="inputs">
+                    <input class="input" placeholder="Where are you going?">
+                    <input class="input" placeholder="Check-in Date">
+                    <input class="input" placeholder="Guests / Rooms">
+                    <button class="btn-primary" onclick="scrollToHotels()">Search Hotels</button>
+                </div>
+
+                <div class="stats">
+                    <div class="stat">
+                        <h2>2M+</h2>
+                        <p>Hotels</p>
+                    </div>
+                    <div class="stat">
+                        <h2>190+</h2>
+                        <p>Countries</p>
+                    </div>
+                    <div class="stat">
+                        <h2>24/7</h2>
+                        <p>Support</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- HOTELS -->
+    <section id="hotels">
+        <h2 class="section-title">Trending Destinations</h2>
+        <p class="section-sub">Premium stays selected by travelers worldwide.</p>
+
+        <div class="grid">
+
+            <div class="card" onclick="openModal('Mumbai Skyline Hotel','$220/night')">
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200">
+                <div class="card-body">
+                    <h3>Mumbai Skyline Hotel</h3>
+                    <div class="meta">
+                        <span>★★★★★</span>
+                        <span class="price">$220/night</span>
+                    </div>
+                    <button class="btn-primary">Book Now</button>
+                </div>
+            </div>
+
+            <div class="card" onclick="openModal('Bangalore Tech Suites','$180/night')">
+                <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1200">
+                <div class="card-body">
+                    <h3>Bangalore Tech Suites</h3>
+                    <div class="meta">
+                        <span>★★★★★</span>
+                        <span class="price">$180/night</span>
+                    </div>
+                    <button class="btn-primary">Book Now</button>
+                </div>
+            </div>
+
+            <div class="card" onclick="openModal('Chennai Marina Resort','$260/night')">
+                <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=1200">
+                <div class="card-body">
+                    <h3>Chennai Marina Resort</h3>
+                    <div class="meta">
+                        <span>★★★★★</span>
+                        <span class="price">$260/night</span>
+                    </div>
+                    <button class="btn-primary">Book Now</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- LUXURY -->
+    <section id="luxury">
+        <h2 class="section-title">Why Choose Us</h2>
+
+        <div class="grid">
+            <div class="card">
+                <div class="card-body">
+                    <h3>Smart Booking Engine</h3>
+                    <p class="section-sub">Instant price matching and dynamic recommendations.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h3>3D Motion UI</h3>
+                    <p class="section-sub">Modern immersive frontend experience.</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h3>Secure Payments</h3>
+                    <p class="section-sub">Enterprise-grade payment flow ready.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+        <h2 class="section-title">Built Like FAANG Products</h2>
+        <p class="section-sub">
+            Performance-first architecture, scalable UI systems, accessibility, and premium interaction design.
+        </p>
+    </section>
+
+    <footer>
+        © 2026 Agoda Clone • Built with HTML + CSS + JavaScript
+    </footer>
+
+    <!-- MODAL -->
+    <div class="modal" id="modal">
+        <div class="modal-box">
+            <span class="close" onclick="closeModal()">×</span>
+            <h2 id="hotelName"></h2>
+            <p id="hotelPrice" style="margin:15px 0;color:#b8c0d0;"></p>
+            <button class="btn-primary" style="width:100%;">Continue Booking</button>
+        </div>
     </div>
-</div>
 
-<!-- HERO IMAGE -->
-<div class="hero">
-    <img src="https://www.agoda.com/press/wp-content/uploads/2025/05/Agoda-Joins-Forces-with-Indian-Hotels-Company-Limited-IHCL-To-Expand-Access-to-Indias-Iconic-Hospitality-Portfolio.jpg">
-</div>
+    <script>
+        const modal = document.getElementById("modal");
+        const hotelName = document.getElementById("hotelName");
+        const hotelPrice = document.getElementById("hotelPrice");
 
-<!-- SINGLE ROOMS -->
-<h6>Single Rooms</h6>
+        function openModal(name, price) {
+            hotelName.innerText = name;
+            hotelPrice.innerText = price;
+            modal.style.display = "flex";
+        }
 
-<div class="Main">
-    <div class="Sub" onclick="openModal('Chennai')">
-        <h2>Chennai</h2>
-        <img src="https://pix10.agoda.net/hotelImages/869954/-1/3adc9b71d77303dfb5eccb8995e9fb95.jpg">
-        <button>Explore</button>
-    </div>
+        function closeModal() {
+            modal.style.display = "none";
+        }
 
-    <div class="Sub" onclick="openModal('Mumbai')">
-        <h2>Mumbai</h2>
-        <img src="https://pix10.agoda.net/hotelImages/31431463/0/9554a10566724d0b18face118ffbcc51.jpg">
-        <button>Explore</button>
-    </div>
+        window.onclick = (e) => {
+            if (e.target === modal) closeModal();
+        };
 
-    <div class="Sub" onclick="openModal('Bangalore')">
-        <h2>Bangalore</h2>
-        <img src="https://pix10.agoda.net/hotelImages/28714334/-1/1c1a995baa5da74a0db6aa1cbccbf966.jpg">
-        <button>Explore</button>
-    </div>
+        function scrollToHotels() {
+            document.getElementById("hotels").scrollIntoView({
+                behavior: "smooth"
+            });
+        }
 
-    <div class="Sub" onclick="openModal('Kolkata')">
-        <h2>Kolkata</h2>
-        <img src="https://cdn10.agoda.net/images/mvc/default/background_image/geo/2203_deluxe_01.jpg">
-        <button>Explore</button>
-    </div>
-</div>
+        function showToast() {
+            alert("Premium product demo coming soon.");
+        }
 
-<!-- DOUBLE ROOMS -->
-<h6>Double Rooms</h6>
+        /* mouse parallax */
+        document.addEventListener("mousemove", (e) => {
+            const x = (e.clientX / window.innerWidth - .5) * 10;
+            const y = (e.clientY / window.innerHeight - .5) * 10;
 
-<div class="Main">
-    <div class="Sub" onclick="openModal('Chennai')">
-        <h2>Chennai</h2>
-        <img src="https://pix10.agoda.net/hotelImages/869954/-1/3adc9b71d77303dfb5eccb8995e9fb95.jpg">
-        <button>Explore</button>
-    </div>
-
-    <div class="Sub" onclick="openModal('Mumbai')">
-        <h2>Mumbai</h2>
-        <img src="https://pix10.agoda.net/hotelImages/31431463/0/9554a10566724d0b18face118ffbcc51.jpg">
-        <button>Explore</button>
-    </div>
-
-    <div class="Sub" onclick="openModal('Bangalore')">
-        <h2>Bangalore</h2>
-        <img src="https://pix10.agoda.net/hotelImages/28714334/-1/1c1a995baa5da74a0db6aa1cbccbf966.jpg">
-        <button>Explore</button>
-    </div>
-
-    <div class="Sub" onclick="openModal('Kolkata')">
-        <h2>Kolkata</h2>
-        <img src="https://cdn10.agoda.net/images/mvc/default/background_image/geo/2203_deluxe_01.jpg">
-        <button>Explore</button>
-    </div>
-</div>
-
-<!-- MODAL -->
-<div class="modal" id="modal">
-    <div class="modal-content">
-        <h2 id="modalCity"></h2>
-        <p>Booking feature coming soon</p>
-        <button class="close" onclick="closeModal()">Close</button>
-    </div>
-</div>
-
-<footer>
-    <h3>book@agoda.in</h3>
-    <p>© 2026 Agoda Clone</p>
-</footer>
-
-<script>
-    function openModal(city){
-        document.getElementById("modal").style.display="flex";
-        document.getElementById("modalCity").innerText=city + " Hotel";
-    }
-
-    function closeModal(){
-        document.getElementById("modal").style.display="none";
-    }
-</script>
+            document.querySelectorAll(".card").forEach(card => {
+                card.style.transform =
+                    `rotateY(${x}deg) rotateX(${-y}deg)`;
+            });
+        });
+    </script>
 
 </body>
+
 </html>
