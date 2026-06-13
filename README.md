@@ -1,4 +1,4 @@
-# 🏨 Agoda Clone – FAANG-Level Intelligent Hotel Booking Platform
+# 🏨 Agoda Clone – Hotel Booking Platform
 
 A production-grade Agoda-inspired hotel booking experience engineered using **HTML, CSS, and JavaScript**, showcasing elite frontend engineering, immersive UI systems, scalable architecture, and premium interaction design.
 
