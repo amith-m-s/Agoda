@@ -234,6 +234,20 @@
             gap: 14px;
         }
 
+        .field {
+            display: grid;
+            gap: 8px;
+            color: var(--muted);
+            font-size: .95rem;
+            font-weight: 600;
+        }
+
+        .input {
+            width: 100%;
+            font: inherit;
+            color-scheme: dark;
+        }
+
         .input {
             padding: 15px;
             border-radius: 16px;
@@ -289,7 +303,6 @@
             overflow: hidden;
             transition: .35s;
             transform-style: preserve-3d;
-            cursor: pointer;
             box-shadow: var(--shadow);
         }
 
@@ -361,8 +374,19 @@
 
         .close {
             float: right;
+            border: 0;
+            padding: 4px 8px;
+            border-radius: 8px;
+            background: transparent;
+            color: var(--text);
             font-size: 28px;
+            line-height: 1;
             cursor: pointer;
+        }
+
+        :focus-visible {
+            outline: 3px solid var(--primary2);
+            outline-offset: 3px;
         }
 
         /* footer */
@@ -396,6 +420,20 @@
 
             .stats {
                 grid-template-columns: 1fr;
+            }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *,
+            *::before,
+            *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                scroll-behavior: auto !important;
+                transition-duration: .01ms !important;
             }
         }
     </style>
@@ -437,10 +475,19 @@
                 <h3>Search Destination</h3>
 
                 <div class="inputs">
-                    <input class="input" placeholder="Where are you going?">
-                    <input class="input" placeholder="Check-in Date">
-                    <input class="input" placeholder="Guests / Rooms">
-                    <button class="btn-primary" onclick="scrollToHotels()">Search Hotels</button>
+                    <label class="field" for="destination">
+                        Destination
+                        <input id="destination" class="input" name="destination" type="text" autocomplete="off" placeholder="Where are you going?">
+                    </label>
+                    <label class="field" for="checkin">
+                        Check-in date
+                        <input id="checkin" class="input" name="checkin" type="date">
+                    </label>
+                    <label class="field" for="guests">
+                        Guests / rooms
+                        <input id="guests" class="input" name="guests" type="number" min="1" max="20" step="1" value="2" inputmode="numeric">
+                    </label>
+                    <button class="btn-primary" type="button" onclick="scrollToHotels()">Search Hotels</button>
                 </div>
 
                 <div class="stats">
@@ -469,39 +516,39 @@
 
         <div class="grid">
 
-            <div class="card" onclick="openModal('Mumbai Skyline Hotel','$220/night')">
-                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200" alt="Hotel with an outdoor swimming pool and landscaped grounds" loading="lazy" decoding="async">
                 <div class="card-body">
                     <h3>Mumbai Skyline Hotel</h3>
                     <div class="meta">
                         <span>★★★★★</span>
                         <span class="price">$220/night</span>
                     </div>
-                    <button class="btn-primary">Book Now</button>
+                    <button class="btn-primary" type="button" data-hotel-name="Mumbai Skyline Hotel" data-hotel-price="$220/night">View details</button>
                 </div>
             </div>
 
-            <div class="card" onclick="openModal('Bangalore Tech Suites','$180/night')">
-                <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1200">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?w=1200" alt="Modern hotel suite with a spacious bedroom" loading="lazy" decoding="async">
                 <div class="card-body">
                     <h3>Bangalore Tech Suites</h3>
                     <div class="meta">
                         <span>★★★★★</span>
                         <span class="price">$180/night</span>
                     </div>
-                    <button class="btn-primary">Book Now</button>
+                    <button class="btn-primary" type="button" data-hotel-name="Bangalore Tech Suites" data-hotel-price="$180/night">View details</button>
                 </div>
             </div>
 
-            <div class="card" onclick="openModal('Chennai Marina Resort','$260/night')">
-                <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=1200">
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=1200" alt="Contemporary resort room with a comfortable bed" loading="lazy" decoding="async">
                 <div class="card-body">
                     <h3>Chennai Marina Resort</h3>
                     <div class="meta">
                         <span>★★★★★</span>
                         <span class="price">$260/night</span>
                     </div>
-                    <button class="btn-primary">Book Now</button>
+                    <button class="btn-primary" type="button" data-hotel-name="Chennai Marina Resort" data-hotel-price="$260/night">View details</button>
                 </div>
             </div>
 
@@ -549,12 +596,12 @@
     </footer>
 
     <!-- MODAL -->
-    <div class="modal" id="modal">
-        <div class="modal-box">
-            <span class="close" onclick="closeModal()">×</span>
+    <div class="modal" id="modal" aria-hidden="true">
+        <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="hotelName" aria-describedby="hotelPrice bookingNotice" tabindex="-1">
+            <button class="close" type="button" aria-label="Close hotel details">×</button>
             <h2 id="hotelName"></h2>
             <p id="hotelPrice" style="margin:15px 0;color:#b8c0d0;"></p>
-            <button class="btn-primary" style="width:100%;">Continue Booking</button>
+            <p id="bookingNotice" class="section-sub" role="status">This is a UI preview; no reservation will be created.</p>
         </div>
     </div>
 
@@ -562,41 +609,87 @@
         const modal = document.getElementById("modal");
         const hotelName = document.getElementById("hotelName");
         const hotelPrice = document.getElementById("hotelPrice");
+        const closeButton = modal.querySelector(".close");
+        const modalBox = modal.querySelector(".modal-box");
+        const focusableSelector = 'button:not([disabled]), [href], input:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-        function openModal(name, price) {
-            hotelName.innerText = name;
-            hotelPrice.innerText = price;
+        let previousFocus = null;
+
+        function openModal(name, price, trigger) {
+            previousFocus = trigger || document.activeElement;
+            hotelName.textContent = name;
+            hotelPrice.textContent = price;
             modal.style.display = "flex";
+            modal.setAttribute("aria-hidden", "false");
+            closeButton.focus();
         }
 
         function closeModal() {
+            if (modal.getAttribute("aria-hidden") === "true") return;
+
             modal.style.display = "none";
+            modal.setAttribute("aria-hidden", "true");
+
+            if (previousFocus instanceof HTMLElement && previousFocus.isConnected) {
+                previousFocus.focus();
+            }
+            previousFocus = null;
         }
 
-        window.onclick = (e) => {
-            if (e.target === modal) closeModal();
-        };
+        closeButton.addEventListener("click", closeModal);
+
+        modal.addEventListener("click", (event) => {
+            if (event.target === modal) closeModal();
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (modal.getAttribute("aria-hidden") === "true") return;
+
+            if (event.key === "Escape") {
+                event.preventDefault();
+                closeModal();
+                return;
+            }
+
+            if (event.key !== "Tab") return;
+
+            const focusable = Array.from(modalBox.querySelectorAll(focusableSelector))
+                .filter((element) => element.getClientRects().length > 0);
+
+            if (focusable.length === 0) {
+                event.preventDefault();
+                modalBox.focus();
+                return;
+            }
+
+            const first = focusable[0];
+            const last = focusable[focusable.length - 1];
+
+            if (event.shiftKey && document.activeElement === first) {
+                event.preventDefault();
+                last.focus();
+            } else if (!event.shiftKey && document.activeElement === last) {
+                event.preventDefault();
+                first.focus();
+            }
+        });
+
+        document.querySelectorAll("[data-hotel-name]").forEach((button) => {
+            button.addEventListener("click", () => {
+                openModal(button.dataset.hotelName, button.dataset.hotelPrice, button);
+            });
+        });
 
         function scrollToHotels() {
+            const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
             document.getElementById("hotels").scrollIntoView({
-                behavior: "smooth"
+                behavior: prefersReducedMotion ? "auto" : "smooth"
             });
         }
 
         function showToast() {
             alert("Premium product demo coming soon.");
         }
-
-        /* mouse parallax */
-        document.addEventListener("mousemove", (e) => {
-            const x = (e.clientX / window.innerWidth - .5) * 10;
-            const y = (e.clientY / window.innerHeight - .5) * 10;
-
-            document.querySelectorAll(".card").forEach(card => {
-                card.style.transform =
-                    `rotateY(${x}deg) rotateX(${-y}deg)`;
-            });
-        });
     </script>
 
 </body>

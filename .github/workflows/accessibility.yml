@@ -1,0 +1,33 @@
+name: Accessibility contract
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  accessibility-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out source
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+
+      - name: Validate inline JavaScript syntax
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+
+          html = Path("index.html").read_text(encoding="utf-8")
+          match = re.search(r"<script>(.*?)</script>", html, re.DOTALL)
+          if not match:
+              raise SystemExit("Expected an inline script in index.html")
+          Path("/tmp/agoda-inline.js").write_text(match.group(1), encoding="utf-8")
+          PY
+          node --check /tmp/agoda-inline.js
+
+      - name: Run accessibility contract tests
+        run: python3 -m unittest discover -s tests -v
